@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+        Technologies 🦄
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="ion-padding technologies">
+    <ion-grid>
+      <ion-row *ngFor="let technology of technologies" align-items-center>
+        <ion-col size="4" padding-end>
+          <ion-img src="{{technology.img}}"></ion-img>
+        </ion-col>
+        <ion-col padding-start>
+          <div *ngFor="let info of technology.info">
+            <p class="ion-no-margin">{{info.module}}</p>
+            <p class="ion-no-margin" padding-start>{{info.version}}</p>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>

@@ -1,0 +1,44 @@
+ion-app {
+
+  .activated {
+  }
+
+  $transition-time: .1s;
+
+  ion-split-pane ion-menu {
+
+    .item-accordion-header {
+      cursor: pointer;
+      user-select: none;
+
+      ion-icon {
+        transition: transform $transition-time linear;
+      }
+
+      &.expanded {
+        --ion-item-background: var(--ion-color-light-tint);
+
+        ion-icon {
+          transform: rotate(90deg);
+        }
+      }
+    }
+
+    .item-accordion {
+      line-height: 24px;
+      padding-top: 0;
+      padding-bottom: 0;
+      min-height: 0 !important;
+      height: 48px;
+      transition: $transition-time all linear;
+
+      &[hidden] {
+        display: block !important;
+        line-height: 0;
+        height: 0;
+      }
+    }
+
+  }
+
+}

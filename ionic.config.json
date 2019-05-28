@@ -1,5 +1,7 @@
 {
   "name": "concept-testing",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
