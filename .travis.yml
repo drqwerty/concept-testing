@@ -1,0 +1,20 @@
+language: node_js
+node_js:
+  - "10.15.3"
+
+branches:
+  only:
+    - master
+
+before_script:
+  - npm i -g ionic cordova
+  - npm i
+
+script:
+  - ionic cordova build browser --prod
+
+deploy:
+  skip-cleanup: true
+  provider: firebase
+  token:
+    secure: $FIREBASE_TOKEN
