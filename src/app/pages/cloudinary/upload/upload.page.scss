@@ -1,0 +1,49 @@
+form.cloudinary-upload-form {
+  ion-item {
+    --highlight-color-focused: none;
+    --highlight-color-valid: none;
+    --highlight-color-invalid: none;
+  }
+
+  ion-label {
+    --color: gray;
+  }
+
+  .card-background-page {
+      width: 70%;
+      position: relative;
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
+  }
+
+
+  #file {
+    + label {
+      font-size: 1.25em;
+      font-weight: 700;
+      color: white;
+      background-color: black;
+      display: inline-block;
+    }
+
+    &:focus + label, + label:hover {
+      background-color: red;
+    }
+  }
+
+  .text-wrap {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 40vw;
+  }
+
+}
+
+.cloudinary-uploading-pending {
+  --progress-background: var(--ion-color-primary);
+}
+
+.cloudinary-uploading-success {
+  --progress-background: var(--ion-color-success-shade);
+}

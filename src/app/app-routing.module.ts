@@ -2,8 +2,11 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', loadChildren: './pages/home/home.module#HomePageModule' },
+  { path: '', redirectTo: 'technologies', pathMatch: 'full' },
+  { path: 'technologies', loadChildren: './pages/technologies/technologies.module#TechnologiesPageModule' },
+  { path: 'cloudinary-upload', loadChildren: './pages/cloudinary/upload/upload.module#UploadPageModule' },
+
+
 ];
 
 @NgModule({

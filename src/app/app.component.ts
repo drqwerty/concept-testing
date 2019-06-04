@@ -16,13 +16,13 @@ export class AppComponent {
       pages: [
         {
           title: 'Technologies',
-          url: '/home',
+          url: '/technologies',
           icon: 'information-circle-outline'
         }
       ]
     },
     {
-      header: 'Firebase Database',
+      header: 'Cloud Firestore',
       hidden: true,
       pages: [
         {
@@ -53,7 +53,7 @@ export class AppComponent {
       pages: [
         {
           title: 'Upload image',
-          url: '/s',
+          url: '/cloudinary-upload',
           icon: 'cloud-upload'
         },
         {

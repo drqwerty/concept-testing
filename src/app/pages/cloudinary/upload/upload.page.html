@@ -1,0 +1,107 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Cloudinary upload</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+<!-- deatiled upload -->
+  <ion-card>
+
+    <ion-card-header>
+      <ion-card-title>Deatiled upload</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <form class="cloudinary-upload-form" [formGroup]="imageForm" (ngSubmit)="upload(false)">
+
+        <ion-item lines="none">
+  <!--               accept="image/*;capture=camera"-->
+          <input type="file"
+                 #imageInput
+                 ng2FileSelect
+                 [uploader]="cloudinaryService.getUploder()"
+                 accept="image/*"
+                 capture
+                 (change)="onFileChange($event)"
+                 hidden>
+<!--          <ion-button expand="block" size="default" (click)="imageInputSetFocus(imageInput)">-->
+<!--            <ion-icon name="cloud-upload" slot="start"></ion-icon>-->
+<!--            <span class="text-wrap">{{uploadButtonText}}</span>-->
+<!--          </ion-button>-->
+          <input hidden formControlName="image"/> <!-- Validation Field -->
+
+          <ion-card (click)="imageInputSetFocus(imageInput)" margin="auto" class="card-background-page">
+              <ion-img [src]="imagePreview"></ion-img>
+          </ion-card>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon name="pricetags" slot="start"></ion-icon>
+          <ion-input placeholder="Add some tags (tag1,tag2,...)" formControlName="tags" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon name="create" slot="start"></ion-icon>
+          <ion-input placeholder="Add a title" formControlName="caption" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon name="md-list" slot="start"></ion-icon>
+          <ion-input placeholder="Add a description" formControlName="alt" type="text"></ion-input>
+        </ion-item>
+
+        <div text-center>
+          <ion-button margin type="submit" [disabled]="!imageForm.valid">Upload</ion-button>
+        </div>
+
+      </form>
+    </ion-card-content>
+
+  </ion-card>
+
+
+<!-- auto upload -->
+  <ion-card>
+
+    <ion-card-header>
+      <ion-card-title>Autoupload</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-item lines="none">
+        <input type="file"
+               #imageInputAutoupload
+               ng2FileSelect
+               [uploader]="cloudinaryService.getUploder()"
+               accept="image/*"
+               capture
+               (change)="upload(true)"
+               hidden>
+        <ion-button expand="block" size="default" (click)="imageInputSetFocus(imageInputAutoupload)">
+          <ion-icon name="cloud-upload" slot="start"></ion-icon>
+          <span class="text-wrap">{{autoUploadButtonText}}</span>
+        </ion-button>
+
+        <ion-thumbnail slot="end">
+          <ion-img [src]="autoUploadResponse? autoUploadResponse.secure_url : imagePreviewDefault"></ion-img>
+        </ion-thumbnail>
+
+      </ion-item>
+    </ion-card-content>
+
+  </ion-card>
+
+
+<!-- progress bar -->
+    <ion-item lines="none">
+      <ion-progress-bar [ngClass]="cloudinaryService.fileProgress < 100 ? 'cloudinary-uploading-pending' : 'cloudinary-uploading-success'"
+                        [value]="cloudinaryService.fileProgress"
+      ></ion-progress-bar>
+    </ion-item>
+
+</ion-content>

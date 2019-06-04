@@ -13,8 +13,8 @@ before_script:
 script:
   - ionic cordova build browser --prod
 
-deploy:
-  skip-cleanup: true
-  provider: firebase
-  token:
-    secure: $FIREBASE_TOKEN
+#deploy:
+#  skip-cleanup: true
+#  provider: firebase
+#  token:
+#    secure: $FIREBASE_TOKEN
