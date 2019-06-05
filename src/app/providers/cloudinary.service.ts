@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CloudinaryOptions, CloudinaryUploader } from 'ng2-cloudinary';
 import { environment } from '../../environments/environment.prod';
 import { Events } from '@ionic/angular';
-import { ParsedResponseHeaders} from 'ng2-file-upload';
+import { ParsedResponseHeaders } from 'ng2-file-upload';
 
 @Injectable({
   providedIn: 'root'
@@ -22,25 +22,21 @@ export class CloudinaryService {
   constructor(public events: Events) { }
 
 
-  upload(metadata: any) {
+  upload(): Promise<string> {
+
     this.cleanQueue(); // Multiple uploads...
-    this.setMetadata(metadata);
     this.file = this.uploader.getNotUploadedItems()[0];
     this.uploader.onProgressItem = (fileItem: any, progress: any): any => {
       this.fileProgress = progress;
     };
     if (this.file) this.uploader.uploadItem(this.file);
-    this.setResponses();
-  }
 
-
-  private setResponses() {
-    this.uploader.onSuccessItem = (item: any, response: string, status: number, headers: ParsedResponseHeaders): any =>
-        this.publishEvent(true, response)
-    ;
-    this.uploader.onErrorItem = (item: any, response: string, status: number, headers: ParsedResponseHeaders): any =>
-        this.publishEvent(false, response)
-    ;
+    return new Promise((resolve, reject) => {
+      this.uploader.onSuccessItem = (item: any, response: string, status: number, headers: ParsedResponseHeaders): any =>
+          resolve(response);
+      this.uploader.onErrorItem = (item: any, response: string, status: number, headers: ParsedResponseHeaders): any =>
+          reject(response);
+    });
   }
 
 
@@ -52,7 +48,7 @@ export class CloudinaryService {
   }
 
 
-  private setMetadata(metadata: any) {
+  setMetadata(metadata: any) {
     this.uploader.onBuildItemForm = (fileItem: any, form: FormData): any => {
       form.append('upload_preset', environment.cloudinary.upload_preset);
       form.append('file', fileItem);
@@ -61,14 +57,6 @@ export class CloudinaryService {
       // Use default "withCredentials" value for CORS requests
       fileItem.withCredentials = false;
     };
-  }
-
-
-  publishEvent(succesStatus: boolean, responseStatus: string) {
-    this.events.publish('cloudinary:upload', {
-      success: succesStatus,
-      response: responseStatus
-    });
   }
 
 
