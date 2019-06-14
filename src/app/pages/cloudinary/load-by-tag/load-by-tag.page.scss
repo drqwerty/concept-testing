@@ -1,0 +1,37 @@
+$search-box-height: 36px;
+
+.cloudinary-search-box {
+  z-index: 2;
+  position: fixed;
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+  height: $search-box-height;
+  --background : white;
+
+  ion-item {
+    height: $search-box-height;
+    --highlight-color-focused: none;
+    --highlight-color-valid: none;
+    --highlight-color-invalid: none;
+
+    ion-input,
+    ion-icon {
+      margin-bottom: 10px;
+    }
+  }
+
+  transition: transform 200ms linear 0s;
+  transform: translateY(0px) !important;
+  &.hidden-on-scroll {
+    transform: translateY(-50px) !important;
+  }
+}
+
+.cloudinary-image-grid {
+  margin-top: $search-box-height*1.4;
+
+  ion-col {
+    padding: 0 2px;
+  }
+}

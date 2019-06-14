@@ -58,7 +58,7 @@ export class AppComponent {
         },
         {
           title: 'Load images by tag',
-          url: '/s',
+          url: '/cloudinary-load-by-tag',
           icon: 'cloud-download'
         }
       ]

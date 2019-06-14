@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { CloudinaryOptions, CloudinaryUploader } from 'ng2-cloudinary';
 import { environment } from '../../environments/environment.prod';
-import { Events } from '@ionic/angular';
-import { ParsedResponseHeaders } from 'ng2-file-upload';
+import { ParsedResponseHeaders} from 'ng2-file-upload';
+import { HttpClient } from '@angular/common/http';
+import { ImageTag } from 'cloudinary-core';
+import {error} from 'selenium-webdriver';
+import {isSuccess} from '@angular/http/src/http_utils';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +22,8 @@ export class CloudinaryService {
   private file: any;
 
 
-  constructor(public events: Events) { }
+  constructor(public http: HttpClient) {
+  }
 
 
   upload(): Promise<string> {
@@ -67,6 +71,25 @@ export class CloudinaryService {
 
   public getFile() {
     return this.uploader.getNotUploadedItems()[0];
+  }
+
+
+  public getImagesByTag(tag: string) {
+    return new Promise((resolve, reject) => {
+      const imageTag = ImageTag.new(`${tag}.json`,
+          {
+            cloud_name: environment.cloudinary.cloud_name,
+            type: 'list'
+          }).getAttr('src');
+
+      return this.http
+          .get(imageTag)
+          // .toPromise();
+          .subscribe(
+              (onSuccesss: any) => resolve(onSuccesss.resources),
+              (onError: any)    => reject(onError.status)
+          );
+    });
   }
 
 }

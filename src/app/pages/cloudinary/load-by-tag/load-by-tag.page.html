@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Cloudinary load by tag</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content scrollEvents="true" (ionScroll)="scroll($event)">
+<!--<ion-content scrollEvents="true" #content>-->
+
+  <ion-card class="cloudinary-search-box" mode="md" [class.hidden-on-scroll]="searchBoxHidden">
+    <ion-item>
+      <ion-input no-padding placeholder="Search..." mode="md" debounce="600" (ionChange)="loadImages()" (keyup.enter)="loadImages()" [(ngModel)]="tag"></ion-input>
+      <ion-icon no-margin name="ios-close" slot="end" (click)="clearInput()" [hidden]="tag==''"></ion-icon>
+    </ion-item>
+  </ion-card>
+
+  <div *ngIf="images != null; else emptyContent">
+    <ion-grid class="cloudinary-image-grid">
+      <ion-row *ngFor="let imageRow of images" align-items-center>
+        <ion-col *ngFor="let image of imageRow" [size]="12/chunkLength" no-padding>
+          <cl-image public-id={{image.public_id}}>
+            <cl-transformation gravity="center" height="150" width="150" crop="thumb">
+            </cl-transformation>
+          </cl-image>
+        </ion-col>
+
+      </ion-row>
+    </ion-grid>
+  </div>
+  <ng-template #emptyContent>
+    <div class="somethingWrong">
+      <span>Try again...</span>
+    </div>
+  </ng-template>
+
+</ion-content>
